@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.JsonCompiler", "FSharp.JsonCompiler\FSharp.JsonCompiler.fsproj", "{45DB60FE-F2FC-4086-8A54-1903C2EF9035}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.JsonCompiler.Tests", "FSharp.JsonCompiler.Tests\FSharp.JsonCompiler.Tests.fsproj", "{F03FA756-CF56-4896-AA1C-40C6A4AE7796}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45DB60FE-F2FC-4086-8A54-1903C2EF9035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DB60FE-F2FC-4086-8A54-1903C2EF9035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DB60FE-F2FC-4086-8A54-1903C2EF9035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DB60FE-F2FC-4086-8A54-1903C2EF9035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03FA756-CF56-4896-AA1C-40C6A4AE7796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03FA756-CF56-4896-AA1C-40C6A4AE7796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03FA756-CF56-4896-AA1C-40C6A4AE7796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03FA756-CF56-4896-AA1C-40C6A4AE7796}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7969F856-5A90-44F5-AB82-0823C844D303}
+	EndGlobalSection
+EndGlobal

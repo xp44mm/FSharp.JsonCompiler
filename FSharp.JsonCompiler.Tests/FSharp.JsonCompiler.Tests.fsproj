@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Compiler\Compiler.Tests\Should.fs" />
+
+    <Compile Include="DemoTest.fs" />
+    <Compile Include="JsonParsingTableTest.fs" />
+    <Compile Include="PrimitiveDriverTest.fs" />
+    <Compile Include="TokenizeTest.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Literals" Version="1.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="1.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FSharp.JsonCompiler\FSharp.JsonCompiler.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Compiler">
+      <HintPath>..\..\Compiler\Compiler\bin\Release\netstandard2.0\Compiler.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.7.2" />
+  </ItemGroup>
+
+</Project>

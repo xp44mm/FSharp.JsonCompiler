@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>xp44mm</Authors>
+    <Company>34696643@qq.com</Company>
+    <PackageLicenseExpression>GPL</PackageLicenseExpression>
+    <Description>Flexible serializer for converting between F# value and JSON</Description>
+    <RepositoryUrl>https://github.com/xp44mm/FSharp.JsonCompiler</RepositoryUrl>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Compiler\Compiler\ParsingTree.fs" />
+    <Compile Include="..\..\Compiler\Compiler\ParsingProgram.fs" />
+    <Compile Include="..\..\FSharp.Literals\FSharp.Literals\StringUtils.fs" />
+
+    <Compile Include="JsonToken.fs" />
+    <Compile Include="ParseInteger.fs" />
+    <Compile Include="JsonTokenizer.fs" />
+    <None Include="json.yacc" />
+    <Compile Include="JsonParsingTable.fs" />
+    <Compile Include="Json.fs" />
+    <Compile Include="JsonCreation.fs" />
+    <Compile Include="JsonDriver.fs" />
+    <Compile Include="JsonRender.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.7.2" />
+  </ItemGroup>
+
+</Project>
