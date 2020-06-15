@@ -12,6 +12,37 @@ type DemoTest(output: ITestOutputHelper) =
         |> output.WriteLine
 
     [<Fact>]
+    member this.``Deserializing test``() =
+        let text = """
+        {
+          "Name": "Apple",
+          "ExpiryDate": "2008-12-28T00:00:00",
+          "Price": 3.99,
+          "Sizes": [
+            "Small",
+            "Medium",
+            "Large"
+          ]
+        }
+        """
+        let y = JsonDriver.parse text
+        show y
+
+        let x = JsonRender.stringify y
+        output.WriteLine(x)
+
+        let tree = Json.Map(Map.ofList [
+            "ExpiryDate",Json.String "2008-12-28T00:00:00";
+            "Name",Json.String "Apple";
+            "Price",Json.Double 3.99;
+            "Sizes",Json.List [|
+                Json.String "Small";
+                Json.String "Medium";
+                Json.String "Large"|]])
+        Should.equal y tree
+
+
+    [<Fact>]
     member this.``htmlColor test``() =
         let tree = Json.Map(Map.ofList ["Blue",Json.Int32 0;"Green",Json.Int32 0;"Red",Json.Int32 255])
         let x = JsonRender.stringify tree
