@@ -25,10 +25,10 @@ type DemoTest(output: ITestOutputHelper) =
           ]
         }
         """
-        let y = JsonDriver.parse text
+        let y = Json.parse text
         show y
 
-        let x = JsonRender.stringify y
+        let x = Json.stringify y
         output.WriteLine(x)
 
         let tree = Json.Map(Map.ofList [
@@ -41,6 +41,23 @@ type DemoTest(output: ITestOutputHelper) =
                 Json.String "Large"|]])
         Should.equal y tree
 
+    [<Fact>]
+    member this.``Navigate test``() =
+
+        let tree = Json.Map(Map.ofList [
+            "ExpiryDate",Json.String "2008-12-28T00:00:00";
+            "Name",Json.String "Apple";
+            "Price",Json.Double 3.99;
+            "Sizes",Json.List [|
+                Json.String "Small";
+                Json.String "Medium";
+                Json.String "Large"|]])
+
+        let name = tree.["Name"]
+        Should.equal name (Json.String "Apple")
+
+        let size0 = tree.["Sizes"].[0]
+        Should.equal size0 (Json.String "Small")
 
     [<Fact>]
     member this.``htmlColor test``() =

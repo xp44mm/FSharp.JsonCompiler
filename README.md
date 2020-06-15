@@ -10,7 +10,7 @@ The recommended way to get `FSharp.JsonCompiler` is to use NuGet. The following 
 
 ### Get Started
 
-the core data type is:
+The core data type is a DU that it represent a syntax tree:
 
 ```F#
 [<RequireQualifiedAccess>]
@@ -54,10 +54,10 @@ let text = """
     ]
 }
 """
-let y = JsonDriver.parse text
+let y = Json.parse text
 show y
 
-let x = JsonRender.stringify y
+let x = Json.stringify y
 show x
 
 let tree = Json.Map(Map.ofList [
@@ -71,12 +71,32 @@ let tree = Json.Map(Map.ofList [
 Should.equal y tree
 ```
 
-the `x` result is compact format:
+The `x` result is compact format:
 
 ```F#
 """
 {"ExpiryDate":"2008-12-28T00:00:00","Name":"Apple","Price":3.99,"Sizes":["Small","Medium","Large"]}
 """
+```
+
+When you get a Json tree, you can navigate it to get a node as you need.
+
+```F#
+let tree = Json.Map(Map.ofList [
+    "ExpiryDate",Json.String "2008-12-28T00:00:00";
+    "Name",Json.String "Apple";
+    "Price",Json.Double 3.99;
+    "Sizes",Json.List [|
+        Json.String "Small";
+        Json.String "Medium";
+        Json.String "Large"|]])
+
+let name = tree.["Name"]
+Should.equal name (Json.String "Apple")
+
+let size0 = tree.["Sizes"].[0]
+Should.equal size0 (Json.String "Small")
+
 ```
 
 ### See Also

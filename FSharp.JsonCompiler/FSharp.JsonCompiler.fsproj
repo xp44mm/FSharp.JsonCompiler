@@ -7,6 +7,7 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Description>Flexible serializer for converting between F# value and JSON</Description>
     <RepositoryUrl>https://github.com/xp44mm/FSharp.JsonCompiler</RepositoryUrl>
+    <Version>1.0.1</Version>
 
   </PropertyGroup>
 
@@ -24,6 +25,7 @@
     <Compile Include="JsonCreation.fs" />
     <Compile Include="JsonDriver.fs" />
     <Compile Include="JsonRender.fs" />
+    <Compile Include="JsonModule.fs" />
   </ItemGroup>
 
   <ItemGroup>
