@@ -5,9 +5,9 @@
     <Authors>xp44m</Authors>
     <Company>34696643@qq.com</Company>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <Description>Flexible serializer for converting between F# value and JSON</Description>
+    <Description>Flexible serializer for converting between F# value and JSON.</Description>
     <RepositoryUrl>https://github.com/xp44mm/FSharp.JsonCompiler</RepositoryUrl>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>F#</RepositoryType>
     <PackageReleaseNotes>本程序依赖另一个通用编译器，是一个编译器的具体实现。</PackageReleaseNotes>
@@ -15,7 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\FSharp.Literals\FSharp.Literals\StringUtils.fs" />
 
     <Compile Include="JsonToken.fs" />
     <Compile Include="ParseInteger.fs" />
@@ -31,6 +30,7 @@
 
   <ItemGroup>
     <PackageReference Include="Compiler.Parsing" Version="1.0.0" />
+    <PackageReference Include="FSharp.Literals" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
