@@ -10,6 +10,7 @@
     <Version>1.0.3</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>F#</RepositoryType>
+    <PackageReleaseNotes>本程序依赖另一个通用编译器，是一个编译器的具体实现。</PackageReleaseNotes>
 
   </PropertyGroup>
 
