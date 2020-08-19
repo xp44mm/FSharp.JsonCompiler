@@ -102,3 +102,13 @@ Should.equal size0 (Json.String "Small")
 ### See Also
 
 FSharp.Literals uses .NET and F# reflection to walk the structure of values so as to build a formatted representation of the value.
+
+### 编译原理
+
+这个解析器分为两个独立的部分，词法分析器，LR上下文无关语法分析。词法分析器首先用.net库的`Regex`正则表达式，匹配文本前缀，生成词法Token的序列，类型为`JsonToken`。语法分析器将词法Token序列，进一步解析成语法树，类型是`Json`。
+
+### 依赖说明
+
+本程序没有使用传统的yacc生成解析代码。而是依赖`ParsingProgram`，位于另一个库`Compiler.Parsing`。解析词法Token序列，生成语法树。前者没有开源。还使用龙书的算法生成解析表，解析表生成程序私有，也没有开源。
+
+传统yacc词法分析，语法分析，过于紧密耦合，所以，我编写了充分利用F#及其语言库的新的编译器程序。JSON解析器是利用这个编译器的一个实践。

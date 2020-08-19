@@ -1,6 +1,6 @@
 ﻿module FSharp.JsonCompiler.JsonDriver
 
-open Compiler
+open Compiler.Parsing
 
 let parser =
     ParsingProgram(

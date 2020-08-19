@@ -2,18 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>xp44mm</Authors>
+    <Authors>xp44m</Authors>
     <Company>34696643@qq.com</Company>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <Description>Flexible serializer for converting between F# value and JSON</Description>
     <RepositoryUrl>https://github.com/xp44mm/FSharp.JsonCompiler</RepositoryUrl>
-    <Version>1.0.1</Version>
+    <Version>1.0.3</Version>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>F#</RepositoryType>
 
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Compiler\Compiler\ParsingTree.fs" />
-    <Compile Include="..\..\Compiler\Compiler\ParsingProgram.fs" />
     <Compile Include="..\..\FSharp.Literals\FSharp.Literals\StringUtils.fs" />
 
     <Compile Include="JsonToken.fs" />
@@ -26,6 +26,10 @@
     <Compile Include="JsonDriver.fs" />
     <Compile Include="JsonRender.fs" />
     <Compile Include="JsonModule.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Compiler.Parsing" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

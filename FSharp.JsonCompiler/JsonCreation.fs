@@ -1,6 +1,6 @@
 ﻿module FSharp.JsonCompiler.JsonCreation
 
-open Compiler
+open Compiler.Parsing
 
 let rec createValue = function
 | Nonterminal("value",[Terminal(LEFT_BRACE);fields;Terminal(RIGHT_BRACE)]) ->
