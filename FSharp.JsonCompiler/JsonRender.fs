@@ -10,17 +10,17 @@ let decimalpoint (s:string) =
         s + ".0"
 
 let rec stringify = function
-| Json.Map mp ->
+| Json.Pairs mp ->
     mp
-    |> Map.toArray
+    |> Set.toArray
     |> Array.map(fun(k,v)->
         toStringLiteral k + ":" + stringify v
     )
     |> String.concat ","
     |> sprintf "{%s}"
-| Json.List ls ->
+| Json.Elements ls ->
     ls
-    |> Array.map(fun v -> stringify v )
+    |> List.map(fun v -> stringify v )
     |> String.concat ","
     |> sprintf "[%s]"
 | Json.Null -> "null"

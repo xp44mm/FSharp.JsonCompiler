@@ -5,8 +5,10 @@ open System.Numerics
 
 [<RequireQualifiedAccess>]
 type Json =
-| Map of Map<string,Json>
-| List of Json []
+///对象的键值对
+| Pairs of Set<string*Json>
+///数组的元素
+| Elements of Json list
 | Null
 | False
 | True
@@ -29,11 +31,11 @@ type Json =
 
     member t.Item with get(idx:int) =
         match t with
-        | Json.List ls -> ls.[idx]
+        | Json.Elements ls -> ls.[idx]
         | _ -> failwith ""
 
     member t.Item with get(key:string) =
         match t with
-        | Json.Map mp -> mp.[key]
+        | Json.Pairs st -> st |> Seq.find(fun(k,_)-> k = key) |> snd
         | _ -> failwith ""
             

@@ -1,14 +1,15 @@
 ﻿module FSharp.JsonCompiler.JsonDriver
 
-open Compiler.Parsing
+open FSharpCompiler.Parsing
 
 let parser =
-    ParsingProgram(
-        JsonParsingTable.productions,
+    SyntacticParser(
+        JsonParsingTable.rules,
+        JsonParsingTable.kernelSymbols,
         JsonParsingTable.parsingTable)
 
 let parseTokens tokens =
-    let parsingTree = parser.parse(JsonTokenizer.getTag, tokens)
+    let parsingTree = parser.parse(tokens,JsonTokenizer.getTag)
     let expr = JsonCreation.createValue parsingTree
     expr
 

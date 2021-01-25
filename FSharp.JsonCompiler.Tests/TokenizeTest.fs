@@ -5,6 +5,7 @@ open Xunit.Abstractions
 open System
 open FSharp.Literals
 open FSharp.JsonCompiler
+open FSharp.xUnit
 
 
 type TokenizeTest(output: ITestOutputHelper) =

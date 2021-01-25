@@ -24,17 +24,18 @@
     <Compile Include="Json.fs" />
     <Compile Include="JsonCreation.fs" />
     <Compile Include="JsonDriver.fs" />
+    <Compile Include="JsonConverter.fs" />
     <Compile Include="JsonRender.fs" />
     <Compile Include="JsonModule.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Compiler.Parsing" Version="1.0.0" />
-    <PackageReference Include="FSharp.Literals" Version="2.0.1" />
+    <PackageReference Include="FSharp.Literals" Version="2.0.5" />
+    <PackageReference Include="FSharpCompiler.Parsing" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.7.2" />
+    <PackageReference Update="FSharp.Core" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

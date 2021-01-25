@@ -4,9 +4,10 @@ open Xunit
 open Xunit.Abstractions
 open System.IO
 
-open Compiler
+open FSharpCompiler.Yacc
 open FSharp.Literals
 open FSharp.JsonCompiler
+open FSharp.xUnit
 
 type JsonParsingTableTest(output:ITestOutputHelper) =
     let show res =
@@ -15,76 +16,85 @@ type JsonParsingTableTest(output:ITestOutputHelper) =
         |> output.WriteLine
 
     let solutionPath = DirectoryInfo(__SOURCE_DIRECTORY__).Parent.FullName
+    let yaccPath = Path.Combine(solutionPath, @"FSharp.JsonCompiler\json.yacc")
+    let text = File.ReadAllText(yaccPath)
+    let yaccFile = YaccFile.parse text
 
     [<Fact>]
-    member this.``productions``() =
-        let yacc = Path.Combine(solutionPath, @"FSharp.JsonCompiler\json.yacc")
+    member this.``driver data``() =
+        //show driver.mainRules
+        let mainRules = [
+            ["value";"{";"fields";"}"];
+            ["value";"[";"values";"]"];
+            ["value";"STRING"];
+            ["value";"NULL"];
+            ["value";"FALSE"];
+            ["value";"TRUE"];
+            ["value";"CHAR"];
+            ["value";"SBYTE"];
+            ["value";"BYTE"];
+            ["value";"INT16"];
+            ["value";"INT32"];
+            ["value";"INT64"];
+            ["value";"INTPTR"];
+            ["value";"UINT16"];
+            ["value";"UINT32"];
+            ["value";"UINT64"];
+            ["value";"UINTPTR"];
+            ["value";"BIGINTEGER"];
+            ["value";"SINGLE"];
+            ["value";"DOUBLE"];
+            ["value";"DECIMAL"];
+            ["fields";"fields";",";"field"];
+            ["fields";"field"];
+            ["fields"];
+            ["field";"STRING";":";"value"];
+            ["values";"values";",";"value"];
+            ["values";"value"];
+            ["values"]]
+        
+        Should.equal yaccFile.mainRules mainRules
 
-        let text = File.ReadAllText(yacc)
-        let driver = YaccFileDriver.parse text
-
-        let result =
-            [
-                "let productions = "
-                "    " + Render.stringify driver.productions
-            ] |> String.concat "\r\n"
-
-        output.WriteLine(result)
-
-        //测试数据是否为最新，确保没有过时
-        Should.equal driver.productions JsonParsingTable.productions
+        Assert.True(yaccFile.precedences.IsEmpty)
 
     [<Fact>]
-    member this.``shiftReduceConflicts``() =
-        let tbl = ParsingTable.ambiguousTable(JsonParsingTable.productions)
-        show tbl.shiftReduceConflicts
+    member this.``解决冲突``() =
+        // 查看生成的表是否有冲突
+        let tbl = AmbiguousTable.create yaccFile.mainRules
 
-        //根据这个表输入优先级
-        let conflicts = []
+        //解析表没有产生式冲突
+        let pconflicts = ConflictFactory.productionConflict tbl.ambiguousTable
 
-        //测试数据是否为最新，确保没有过时
-        Should.equal conflicts tbl.shiftReduceConflicts
+        Assert.True(pconflicts.IsEmpty)
+
+        // 符号多用警告
+        let warning = ConflictFactory.overloadsWarning tbl
+
+        Assert.True(warning.IsEmpty)
+
+        //优先级冲突
+        let srconflicts = ConflictFactory.shiftReduceConflict tbl
+        
+        Assert.True(srconflicts.IsEmpty)
+
 
     [<Fact>]
-    member this.``Parsing Table Generator``() =
+    member this.``测试解析表数据是否为最新``() =
+        //所有冲突都解决了，可以生成解析表
+        let yacc = ParseTable.create(yaccFile.mainRules, yaccFile.precedences)
 
-        let gen = ParsingTableGenerator(JsonParsingTable.productions,[])
+        ////解析表数据
+        //let result =
+        //    [
+        //        "let rules = " + Render.stringify yacc.rules
+        //        "let kernelSymbols = " + Render.stringify yacc.kernelSymbols
+        //        "let parsingTable = " + Render.stringify yacc.parsingTable
+        //    ] |> String.concat System.Environment.NewLine
+        //output.WriteLine(result)
 
-        let parsingTable = 
-            gen.encodeTable
-            |> List.toArray
+        //生成的产生式等于源代码中的产生式
+        Should.equal yacc.rules JsonParsingTable.rules
+        Should.equal yacc.parsingTable JsonParsingTable.parsingTable
+        Should.equal yacc.kernelSymbols JsonParsingTable.kernelSymbols
 
-        let result =
-            [
-                "let parsingTable = "
-                "    " + Render.stringify parsingTable
-            ] |> String.concat "\r\n"
 
-        output.WriteLine(result)
-
-        //测试数据是否为最新，确保没有过时
-        Should.equal parsingTable JsonParsingTable.parsingTable
-
-    //[<Fact>]
-    //member this.``regex first or last token test``() =
-    //    let yacc = Path.Combine(solutionPath, @"Compiler\lex.yacc")
-
-    //    let text = File.ReadAllText(yacc)
-    //    let driver = YaccFileDriver.parse text
-
-    //    let grammar = Grammar.create driver.productions
-    //    let nullableTable = NullableCollection grammar
-
-    //    let first =
-    //        FirstCollection(grammar,nullableTable).firstMap.["Expr"]
-
-    //    let last =
-    //        LastCollection(grammar,nullableTable).lastMap.["Expr"]
-
-    //    output.WriteLine("let first = ")
-    //    show first
-    //    output.WriteLine("let last = ")
-    //    show last
-
-    //    Should.equal first LexFileTokenizer.first
-    //    Should.equal last LexFileTokenizer.last

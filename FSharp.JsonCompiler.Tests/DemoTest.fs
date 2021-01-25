@@ -4,6 +4,7 @@ open Xunit
 open Xunit.Abstractions
 open FSharp.JsonCompiler
 open FSharp.Literals
+open FSharp.xUnit
 
 type DemoTest(output: ITestOutputHelper) =
     let show outp =
@@ -31,27 +32,27 @@ type DemoTest(output: ITestOutputHelper) =
         let x = Json.stringify y
         output.WriteLine(x)
 
-        let tree = Json.Map(Map.ofList [
+        let tree = Json.Pairs(set [
             "ExpiryDate",Json.String "2008-12-28T00:00:00";
             "Name",Json.String "Apple";
             "Price",Json.Double 3.99;
-            "Sizes",Json.List [|
+            "Sizes",Json.Elements [
                 Json.String "Small";
                 Json.String "Medium";
-                Json.String "Large"|]])
+                Json.String "Large"]])
         Should.equal y tree
 
     [<Fact>]
     member this.``Navigate test``() =
 
-        let tree = Json.Map(Map.ofList [
+        let tree = Json.Pairs(set [
             "ExpiryDate",Json.String "2008-12-28T00:00:00";
             "Name",Json.String "Apple";
             "Price",Json.Double 3.99;
-            "Sizes",Json.List [|
+            "Sizes",Json.Elements [
                 Json.String "Small";
                 Json.String "Medium";
-                Json.String "Large"|]])
+                Json.String "Large"]])
 
         let name = tree.["Name"]
         Should.equal name (Json.String "Apple")
@@ -61,7 +62,7 @@ type DemoTest(output: ITestOutputHelper) =
 
     [<Fact>]
     member this.``htmlColor test``() =
-        let tree = Json.Map(Map.ofList ["Blue",Json.Int32 0;"Green",Json.Int32 0;"Red",Json.Int32 255])
+        let tree = Json.Pairs(set ["Blue",Json.Int32 0;"Green",Json.Int32 0;"Red",Json.Int32 255])
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
         show y
@@ -69,7 +70,7 @@ type DemoTest(output: ITestOutputHelper) =
 
     [<Fact>]
     member this.``roles test``() =
-        let tree = Json.List [|Json.String "User";Json.String "Admin"|]
+        let tree = Json.Elements [Json.String "User";Json.String "Admin"]
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
         show y
@@ -77,7 +78,7 @@ type DemoTest(output: ITestOutputHelper) =
 
     [<Fact>]
     member this.``dailyRegistrations test``() =
-        let tree = Json.Map(Map.ofList ["2014-06-01T00:00:00",Json.Int32 23;"2014-06-02T00:00:00",Json.Int32 50])
+        let tree = Json.Pairs(set ["2014-06-01T00:00:00",Json.Int32 23;"2014-06-02T00:00:00",Json.Int32 50])
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
         show y
@@ -85,7 +86,7 @@ type DemoTest(output: ITestOutputHelper) =
 
     [<Fact>]
     member this.``city test``() =
-        let tree = Json.Map(Map.ofList ["Name",Json.String "Oslo";"Population",Json.Int32 650000])
+        let tree = Json.Pairs(set ["Name",Json.String "Oslo";"Population",Json.Int32 650000])
 
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
@@ -94,7 +95,7 @@ type DemoTest(output: ITestOutputHelper) =
 
     [<Fact>]
     member this.``SerializationBasics2 test``() =
-        let tree = Json.Map(Map.ofList ["Date",Json.String "new Date(1401796800000)";"Name",Json.String "Serialize All The Things"])
+        let tree = Json.Pairs(set ["Date",Json.String "new Date(1401796800000)";"Name",Json.String "Serialize All The Things"])
 
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
@@ -103,7 +104,7 @@ type DemoTest(output: ITestOutputHelper) =
 
     [<Fact>]
     member this.``SerializeReferencesByValue test``() =
-        let tree = Json.Map(Map.ofList ["Name",Json.String "Mike Manager";"Reportees",Json.List [|Json.Map(Map.ofList ["Name",Json.String "Arnie Admin"]);Json.Map(Map.ofList ["Name",Json.String "Susan Supervisor";"Reportees",Json.List [|Json.Map(Map.ofList ["Name",Json.String "Arnie Admin"])|]])|]])
+        let tree = Json.Pairs(set ["Name",Json.String "Mike Manager";"Reportees",Json.Elements [Json.Pairs(set ["Name",Json.String "Arnie Admin"]);Json.Pairs(set ["Name",Json.String "Susan Supervisor";"Reportees",Json.Elements [Json.Pairs(set ["Name",Json.String "Arnie Admin"])]])]])
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
         show y
@@ -112,7 +113,7 @@ type DemoTest(output: ITestOutputHelper) =
     [<Fact>]
     member this.``SerializeReferencesWithMetadata test``() =
         let tree = 
-            Json.Map(Map.ofList ["$id",Json.String "1";"$type",Json.String "YourNamespace.Manager, YourAssembly";"Name",Json.String "Mike Manager";"Reportees",Json.List [|Json.Map(Map.ofList ["$id",Json.String "2";"$type",Json.String "YourNamespace.Employee, YourAssembly";"Name",Json.String "Arnie Admin"]);Json.Map(Map.ofList ["$id",Json.String "3";"$type",Json.String "YourNamespace.Manager, YourAssembly";"Name",Json.String "Susan Supervisor";"Reportees",Json.List [|Json.Map(Map.ofList ["$ref",Json.String "2"])|]])|]])
+            Json.Pairs(set ["$id",Json.String "1";"$type",Json.String "YourNamespace.Manager, YourAssembly";"Name",Json.String "Mike Manager";"Reportees",Json.Elements [Json.Pairs(set ["$id",Json.String "2";"$type",Json.String "YourNamespace.Employee, YourAssembly";"Name",Json.String "Arnie Admin"]);Json.Pairs(set ["$id",Json.String "3";"$type",Json.String "YourNamespace.Manager, YourAssembly";"Name",Json.String "Susan Supervisor";"Reportees",Json.Elements [Json.Pairs(set ["$ref",Json.String "2"])]])]])
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
         show y
@@ -122,9 +123,9 @@ type DemoTest(output: ITestOutputHelper) =
     [<Fact>]
     member this.``SerializeAttributes test``() =
         let tree = 
-            Json.List [|
-                Json.Map(Map.ofList ["Bedrooms",Json.Int32 2;"BuildDate",Json.String "1890-01-01T00:00:00";"FloorArea",Json.Double 100.0;"StreetAddress",Json.String "221B Baker Street"]);Json.Map(Map.ofList ["StreetAddress",Json.String "221B Baker Street"]);Json.Map(Map.ofList ["address",Json.String "221B Baker Street"]);Json.Map(Map.ofList ["address",Json.String "221B Baker Street";"buildDate",Json.String "1890-01-01T00:00:00"]);Json.Map(Map.ofList ["address",Json.String "221B Baker Street";"buildDate",Json.String "new Date(-2524568400000)"])
-                |]
+            Json.Elements [
+                Json.Pairs(set ["Bedrooms",Json.Int32 2;"BuildDate",Json.String "1890-01-01T00:00:00";"FloorArea",Json.Double 100.0;"StreetAddress",Json.String "221B Baker Street"]);Json.Pairs(set ["StreetAddress",Json.String "221B Baker Street"]);Json.Pairs(set ["address",Json.String "221B Baker Street"]);Json.Pairs(set ["address",Json.String "221B Baker Street";"buildDate",Json.String "1890-01-01T00:00:00"]);Json.Pairs(set ["address",Json.String "221B Baker Street";"buildDate",Json.String "new Date(-2524568400000)"])
+                ]
         let x = JsonRender.stringify tree
         let y = JsonDriver.parse x
         show y
@@ -132,7 +133,7 @@ type DemoTest(output: ITestOutputHelper) =
 
     [<Fact>]
     member this.``map name test``() =
-        let tree = Json.Map(Map.ofList ["Blue",Json.Int32 0;"Green",Json.Int32 0;"Red",Json.Int32 255])
+        let tree = Json.Pairs(set ["Blue",Json.Int32 0;"Green",Json.Int32 0;"Red",Json.Int32 255])
         let y = tree.["Blue"]
         show y
         //Should.equal y tree
@@ -140,9 +141,9 @@ type DemoTest(output: ITestOutputHelper) =
     [<Fact>]
     member this.``list index test``() =
         let tree = 
-            Json.List [|
-                Json.Map(Map.ofList ["Bedrooms",Json.Int32 2;"BuildDate",Json.String "1890-01-01T00:00:00";"FloorArea",Json.Double 100.0;"StreetAddress",Json.String "221B Baker Street"]);Json.Map(Map.ofList ["StreetAddress",Json.String "221B Baker Street"]);Json.Map(Map.ofList ["address",Json.String "221B Baker Street"]);Json.Map(Map.ofList ["address",Json.String "221B Baker Street";"buildDate",Json.String "1890-01-01T00:00:00"]);Json.Map(Map.ofList ["address",Json.String "221B Baker Street";"buildDate",Json.String "new Date(-2524568400000)"])
-                |]
+            Json.Elements [
+                Json.Pairs(set ["Bedrooms",Json.Int32 2;"BuildDate",Json.String "1890-01-01T00:00:00";"FloorArea",Json.Double 100.0;"StreetAddress",Json.String "221B Baker Street"]);Json.Pairs(set ["StreetAddress",Json.String "221B Baker Street"]);Json.Pairs(set ["address",Json.String "221B Baker Street"]);Json.Pairs(set ["address",Json.String "221B Baker Street";"buildDate",Json.String "1890-01-01T00:00:00"]);Json.Pairs(set ["address",Json.String "221B Baker Street";"buildDate",Json.String "new Date(-2524568400000)"])
+                ]
 
         let y = tree.[0]
         show y

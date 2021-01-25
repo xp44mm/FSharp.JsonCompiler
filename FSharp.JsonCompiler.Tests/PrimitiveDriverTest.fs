@@ -4,6 +4,7 @@ open Xunit
 open Xunit.Abstractions
 open System
 open FSharp.JsonCompiler
+open FSharp.xUnit
 
 type PrimitiveDriverTest(output: ITestOutputHelper) =
     [<Fact>]
