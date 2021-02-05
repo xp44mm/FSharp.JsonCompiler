@@ -1,4 +1,4 @@
-﻿namespace FSharp.JsonCompiler.Tests
+﻿namespace FSharp.JsonCompiler
 
 open Xunit
 open Xunit.Abstractions
@@ -6,7 +6,6 @@ open System.IO
 
 open FSharpCompiler.Yacc
 open FSharp.Literals
-open FSharp.JsonCompiler
 open FSharp.xUnit
 
 type JsonParsingTableTest(output:ITestOutputHelper) =

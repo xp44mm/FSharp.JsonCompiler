@@ -15,13 +15,14 @@
     <Compile Include="PrimitiveDriverTest.fs" />
     <Compile Include="TokenizeTest.fs" />
     <Compile Include="JsonConverterTest.fs" />
+    <Compile Include="FSharpToJsonTest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FSharp.Literals" Version="2.0.5" />
     <PackageReference Include="FSharp.xUnit" Version="1.0.0" />
-    <PackageReference Include="FSharpCompiler.Yacc" Version="1.0.1" />
+    <PackageReference Include="FSharpCompiler.Yacc" Version="1.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">

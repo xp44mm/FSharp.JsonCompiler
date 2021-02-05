@@ -39,7 +39,9 @@ type Json =
 
 ```
 
-FSharp.JsonCompiler is to convert between this syntax tree to and from JSON string.
+类型名称使用.net库的类名称，而非F#的友好名称。
+
+`FSharp.JsonCompiler` is to convert between this syntax tree to and from JSON string.
 
 ```F#
 let text = """

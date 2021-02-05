@@ -1,4 +1,4 @@
-﻿namespace FSharp.JsonCompiler.Tests
+﻿namespace FSharp.JsonCompiler
 
 open Xunit
 open Xunit.Abstractions

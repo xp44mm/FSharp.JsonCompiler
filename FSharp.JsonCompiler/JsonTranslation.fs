@@ -1,16 +1,16 @@
-﻿module FSharp.JsonCompiler.JsonCreation
+﻿module FSharp.JsonCompiler.JsonTranslation
 
 open FSharpCompiler.Parsing
 
-let rec createValue = function
+let rec translateValue = function
 | Interior("value",[Terminal(LEFT_BRACE);fields;Terminal(RIGHT_BRACE)]) ->
     fields
-    |> createFields
+    |> translateFields
     |> Set.ofList
     |> Json.Pairs
 | Interior("value",[Terminal(LEFT_BRACK);values;Terminal(RIGHT_BRACK)]) ->
     values
-    |> createValues
+    |> translateValues
     |> List.rev
     |> Json.Elements
 | Interior("value",[Terminal(NULL)]) ->
@@ -58,25 +58,25 @@ let rec createValue = function
     |> Json.Decimal
 | never -> failwithf "%A"  <| never.get_firstLevel()
 
-and createFields = function
+and translateFields = function
 | Interior("fields",[Interior("fields",_) as ls; comma; field]) ->
-    createField field :: createFields ls
+    translateField field :: translateFields ls
 | Interior("fields",[field]) ->
-    [createField field]
+    [translateField field]
 | Interior("fields",[]) ->
     []
 | never -> failwithf "%A"  <| never.get_firstLevel()
 
-and createField = function
+and translateField = function
 | Interior("field",[Terminal(STRING s); colon; value]) ->
-    (s, createValue value)
+    (s, translateValue value)
 | never -> failwithf "%A"  <| never.get_firstLevel()
 
-and createValues = function
+and translateValues = function
 | Interior("values",[Interior("values",_) as ls; comma; value]) ->
-    createValue value :: createValues ls
+    translateValue value :: translateValues ls
 | Interior("values",[value]) ->
-    [createValue value]
+    [translateValue value]
 | Interior("values",[]) ->
     []
 | never -> failwithf "%A" <| never.get_firstLevel()
