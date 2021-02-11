@@ -7,7 +7,7 @@ let rec translateValue = function
     fields
     |> translateFields
     |> Set.ofList
-    |> Json.Pairs
+    |> Json.Fields
 | Interior("value",[Terminal(LEFT_BRACK);values;Terminal(RIGHT_BRACK)]) ->
     values
     |> translateValues

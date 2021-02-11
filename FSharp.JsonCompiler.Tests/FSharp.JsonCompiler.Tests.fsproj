@@ -14,13 +14,27 @@
     <Compile Include="DemoTest.fs" />
     <Compile Include="PrimitiveDriverTest.fs" />
     <Compile Include="TokenizeTest.fs" />
-    <Compile Include="JsonConverterTest.fs" />
-    <Compile Include="FSharpToJsonTest.fs" />
+    <Compile Include="EnumTest.fs" />
+    <Compile Include="DBNullConverterTest.fs" />
+    <Compile Include="DateTimeOffsetConverterTest.fs" />
+    <Compile Include="TimeSpanConverterTest.fs" />
+    <Compile Include="NullableTest.fs" />
+    <Compile Include="OptionTest.fs" />
+    <Compile Include="ArrayTest.fs" />
+    <Compile Include="TupleTest.fs" />
+    <Compile Include="RecordTest.fs" />
+    <Compile Include="ListTest.fs" />
+    <Compile Include="SetTest.fs" />
+    <Compile Include="MapTest.fs" />
+    <Compile Include="UnionTest.fs" />
+    <Compile Include="GuidTest.fs" />
+    <Compile Include="FSharpWriterTest.fs" />
+    <Compile Include="FSharpReaderTest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Literals" Version="2.0.5" />
+    <PackageReference Include="FSharp.Literals" Version="2.0.6" />
     <PackageReference Include="FSharp.xUnit" Version="1.0.0" />
     <PackageReference Include="FSharpCompiler.Yacc" Version="1.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
@@ -40,7 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="5.0.0" />
+    <PackageReference Update="FSharp.Core" Version="5.0.1" />
   </ItemGroup>
 
 </Project>

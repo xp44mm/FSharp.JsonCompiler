@@ -6,7 +6,7 @@ open System.Numerics
 [<RequireQualifiedAccess>]
 type Json =
 ///对象的键值对
-| Pairs of Set<string*Json>
+| Fields of Set<string*Json>
 ///数组的元素
 | Elements of Json list
 | Null
@@ -36,6 +36,18 @@ type Json =
 
     member t.Item with get(key:string) =
         match t with
-        | Json.Pairs st -> st |> Seq.find(fun(k,_)-> k = key) |> snd
-        | _ -> failwith ""
+        | Json.Fields st -> 
+            // 等价方法：
+            // st |> Seq.find(fun(k,_)-> k = key) |> snd
+            let sq = st |> Seq.skipWhile(fun(k,_)-> k < key)
+            if Seq.isEmpty sq then
+                failwith "key no found"
+            else
+                let k,v = Seq.head sq
+                if k = key then
+                    v
+                else
+                    failwith "key no found"
+           
+        | _ -> failwith "only for object"
             

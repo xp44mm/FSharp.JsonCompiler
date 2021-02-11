@@ -1,3 +1,4 @@
-module Program
+module FSharp.JsonCompiler.Program
 
-let [<EntryPoint>] main _ = 0
+let [<EntryPoint>] main _ = 
+    0

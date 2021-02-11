@@ -24,19 +24,33 @@
     <Compile Include="Json.fs" />
     <Compile Include="JsonTranslation.fs" />
     <Compile Include="JsonDriver.fs" />
-    <Compile Include="JsonConverter.fs" />
-    <Compile Include="FSharpToJson.fs" />
     <Compile Include="JsonRender.fs" />
+    <Compile Include="FSharpModules.fs" />
+    <Compile Include="FSharpReader.fs" />
+    <Compile Include="FSharpWriter.fs" />
+    <Compile Include="GuidConverter.fs" />
+    <Compile Include="NullableConverter.fs" />
+    <Compile Include="OptionConverter.fs" />
+    <Compile Include="DBNullConverter.fs" />
+    <Compile Include="EnumConverter.fs" />
+    <Compile Include="DateTimeOffsetConverter.fs" />
+    <Compile Include="TimeSpanConverter.fs" />
+    <Compile Include="DateTimeConverter.fs" />
+    <Compile Include="RecordConverter.fs" />
+    <Compile Include="ListConverter.fs" />
+    <Compile Include="SetConverter.fs" />
+    <Compile Include="MapConverter.fs" />
+    <Compile Include="UnionConverter.fs" />
     <Compile Include="JsonModule.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Literals" Version="2.0.5" />
+    <PackageReference Include="FSharp.Literals" Version="2.0.6" />
     <PackageReference Include="FSharpCompiler.Parsing" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="5.0.0" />
+    <PackageReference Update="FSharp.Core" Version="5.0.1" />
   </ItemGroup>
 
 </Project>

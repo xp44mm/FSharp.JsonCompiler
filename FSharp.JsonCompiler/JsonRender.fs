@@ -10,7 +10,7 @@ let decimalpoint (s:string) =
         s + ".0"
 
 let rec stringify = function
-| Json.Pairs mp ->
+| Json.Fields mp ->
     mp
     |> Set.toArray
     |> Array.map(fun(k,v)->
