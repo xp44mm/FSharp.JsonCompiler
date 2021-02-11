@@ -39,32 +39,14 @@ module FSharpWriters =
         | Json.Single     x -> box x |> assertType<Single> ty
         | Json.Double     x -> box x |> assertType<float> ty
         | Json.Decimal    x -> box x |> assertType<decimal> ty
-        | Json.Fields fields -> failwith "not allowed type"
-
-        | Json.Elements (elements) ->
-            if ty.IsArray then
-                let elementType = ty.GetElementType()
-                let arr = (Array.CreateInstance:Type*int->Array)(elementType,elements.Length)
-                elements
-                |> List.map(fun e -> loopWrite elementType e)
-                |> List.iteri(fun i v ->
-                    arr.SetValue(v, i)
-                )
-                box arr
-            elif FSharpType.IsTuple ty then
-                let tps = FSharpType.GetTupleElements(ty)
-                let elements = Array.ofList elements
-                let values =
-                    Array.zip tps elements
-                    |> Array.map(fun(tp,json)-> loopWrite tp json)
-                FSharpValue.MakeTuple(values,ty)
-            else failwith "not allowed type"
+        | Json.Fields _ -> failwith "not allowed type"
+        | Json.Elements _ -> failwith "not allowed type"
 
     /// convert from json to obj.
-    let rec mainWrite (writers:FSharpWriter[]) (ty:Type) (json:Json) =
+    let rec mainWrite (writers:#seq<FSharpWriter>) (ty:Type) (json:Json) =
         let write =
             writers
-            |> Array.tryFind(fun w -> w.filter(ty,json))
+            |> Seq.tryFind(fun w -> w.filter(ty,json))
             |> Option.map(fun w -> w.write)
             |> Option.defaultValue fallbackWrite
 

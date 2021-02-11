@@ -36,11 +36,14 @@
     <Compile Include="DateTimeOffsetConverter.fs" />
     <Compile Include="TimeSpanConverter.fs" />
     <Compile Include="DateTimeConverter.fs" />
+    <Compile Include="ArrayConverter.fs" />
+    <Compile Include="TupleConverter.fs" />
     <Compile Include="RecordConverter.fs" />
     <Compile Include="ListConverter.fs" />
     <Compile Include="SetConverter.fs" />
     <Compile Include="MapConverter.fs" />
     <Compile Include="UnionConverter.fs" />
+    <Compile Include="ObjectConverter.fs" />
     <Compile Include="JsonModule.fs" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ type TupleTest(output: ITestOutputHelper) =
     [<Fact>]
     member this.``read array``() =
         let x = (1,"x")
-        let y = FSharpReaders.mainRead [||] typeof<int*string> x
+        let y = FSharpReaders.mainRead [|TupleConverter.TupleReader|] typeof<int*string> x
         //output.WriteLine(Render.stringify y)
         Should.equal y <| Json.Elements [Json.Int32 1;Json.String "x"]
 
@@ -20,7 +20,7 @@ type TupleTest(output: ITestOutputHelper) =
     member this.``array instantiate``() =
         let x = Json.Elements [Json.Int32 1;Json.String "x"]
         let y = 
-            FSharpWriters.mainWrite [||] typeof<int*string> x
+            FSharpWriters.mainWrite [|TupleConverter.TupleWriter|] typeof<int*string> x
             :?> int*string
 
         //output.WriteLine(Render.stringify y)

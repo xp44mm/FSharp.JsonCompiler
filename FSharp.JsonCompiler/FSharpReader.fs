@@ -96,19 +96,6 @@ module FSharpReaders =
             unbox<string> value
             |> Json.String
 
-        elif ty.IsArray && ty.GetArrayRank() = 1 then
-            let reader = Readers.arrayReader ty
-            let elements = reader value
-            let elemType = ty.GetElementType()
-    
-            readArrayElements loopRead elemType elements
-        elif FSharpType.IsTuple ty then
-            let reader = Readers.tupleReader ty
-            let elements = reader value
-            let elementTypes = FSharpType.GetTupleElements(ty)
-    
-            Array.zip elementTypes elements
-            |> readTupleFields loopRead
         elif isNull value then
             Json.Null
         elif ty = typeof<obj> && value.GetType() <> typeof<obj> then
@@ -116,10 +103,10 @@ module FSharpReaders =
         else
             Json.String (Render.stringifyNullableType ty value)
 
-    let rec mainRead (readers:FSharpReader[]) (ty:Type) (value:obj) =
+    let rec mainRead (readers:#seq<FSharpReader>) (ty:Type) (value:obj) =
         let read =
             readers
-            |> Array.tryFind(fun reader -> reader.filter(ty,value))
+            |> Seq.tryFind(fun reader -> reader.filter(ty,value))
             |> Option.map(fun x -> x.read)
             |> Option.defaultValue fallbackRead
 
